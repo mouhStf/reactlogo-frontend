@@ -6,6 +6,10 @@ import { DashboardPage } from './pages/Dashboard';
 import { HomePage } from './pages/Home';
 import { Navbar } from './Navbar';
 import { SignupPage } from './pages/Signup';
+import { Shop } from './pages/Shop';
+import { Product } from './pages/Product';
+import { Blog } from './pages/Blog';
+import { BlogPost } from './pages/BlogPost';
 
 
 async function protectedLoader() {
@@ -22,6 +26,20 @@ const router = createBrowserRouter([
     element: <Root/>,
     children: [
       { path: '', element: <HomePage/>, },
+      { 
+        path: 'shop',
+        children: [
+          {path: '', element: <Shop/>, },
+          {path: 'produit', element: <Product/>, },
+        ],
+      },
+      { 
+        path: 'blog',
+        children: [
+          {path: '', element: <Blog/>, },
+          {path: 'article', element: <BlogPost/>, },
+        ],
+      },
       { path: 'signup', element: <SignupPage/> },
       { path: 'login', element: <LoginPage/>, loader: protectedLoader },
       { path: 'dashboard', element: <DashboardPage/>,
@@ -45,9 +63,9 @@ function Root() {
   useEffect(() => { authenticate(); }, []);
 
   return (
-    <div className="bg-gray-100 min-h-screen font-sans">
+    <div className="bg-gray-100 min-h-screen font-serif">
       <Navbar/>
-      <main className="p-4 md:p-8">
+      <main>
         <Outlet/>
       </main>
     </div>

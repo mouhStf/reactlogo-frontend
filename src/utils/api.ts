@@ -1,6 +1,6 @@
 export const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8080';
 
-export async function apiFetch (
+export async function apiFetch<T> (
   path: string,
   { 
     headers,
@@ -13,7 +13,7 @@ export async function apiFetch (
     body?: BodyInit;
     method?: string;
   } = {}
-)  {
+) : Promise<T> {
   method ??= json ? 'POST' : 'GET';
 
   let finalBody: BodyInit | undefined = body;
@@ -36,17 +36,21 @@ export async function apiFetch (
     headers: finalHeaders,
   });
 
-  if (r.status === 401) {
-    if (localStorage.getItem('token')) {
-      localStorage.removeItem('token');
-      window.location.reload();
-    }
+  if (r.ok) {
+    return r.json() as Promise<T>;
   }
-  return r;
+
+  throw new ApiError(r.status, await r.json());
 }
 
 class ApiError extends Error {
   constructor(public status: number, public data: Record<string, unknown>) {
+    if (status === 401) {
+      if (localStorage.getItem('token')) {
+        localStorage.removeItem('token');
+        window.location.reload();
+      }
+    }
     super();
   }
 }

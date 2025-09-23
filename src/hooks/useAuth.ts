@@ -33,29 +33,28 @@ export function useAuth() {
   }, []);
 
   const login = useCallback(async (email: string, password: string) => {
-    const res = await apiFetch('/api/login', {
+    await apiFetch<any>('/api/login', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       json: { email, password },
-    });
-
-    if (!res.ok) throw new Error('Login failed');
-
-    const data = await res.json();
-    localStorage.setItem('token', data.token ?? 'dummy');
-    setIsAuthenticated(true);
+    }).then(r => {
+        localStorage.setItem('token', r.token ?? 'dummy');
+        setIsAuthenticated(true);
+      }).catch((e) => {
+        throw new Error('Login failed');
+      })
   }, []);
 
-  const signUp = useCallback(async (email: string, password: string) => {
-    const r = await apiFetch('/api/signup', {
-      method: 'POST',
-      json: { email, password },
-    });
-    const data = await r.json();
-    if (!r.ok) {
-      throw new Error(data.message || 'Signup failed');
-    }
-  }, []);
+  const signUp = useCallback(async (
+    prenom: string, nom: string, telephone: string, email: string, password: string
+  ) => {
+      await apiFetch<any>('/api/signup', {
+        method: 'POST',
+        json: { prenom, nom, telephone, email, password },
+      }).catch(err => {
+          throw new Error(err.message || 'Signup failed')
+        })
+    }, []);
 
   return { authenticate, isAuthenticated, login, logout, signUp };
 }

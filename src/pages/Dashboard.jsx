@@ -11,12 +11,9 @@ export function DashboardPage() {
   const [uploadStatus, setUploadStatus] = useState('');
 
   useEffect(() => {
-    try {
-      fetchDashboard();
-    } catch (err) {
-      console.log(err);
+    fetchDashboard().catch (err => {
       setError(err.message);
-    }
+    })
   }, []);
 
   const handleFileChange = (event) => {
@@ -43,7 +40,7 @@ export function DashboardPage() {
   if (error) return <p className="text-red-500 text-center">{error}</p>;
   if (!user) return <p className="text-center">Loading dashboard...</p>;
 
-  const avatarUrl = user.avatarUrl ? `${API_BASE_URL}${user.avatarUrl}` : 'https://placehold.co/128x128/E0E0E0/BDBDBD?text=No+Avatar';
+  const avatarUrl = user.avatarURL ? `${API_BASE_URL}${user.avatarUrl}` : 'https://placehold.co/128x128/E0E0E0/BDBDBD?text=No+Avatar';
 
   return (
     <div className="bg-white p-8 rounded-lg shadow-md max-w-2xl mx-auto">
@@ -51,8 +48,8 @@ export function DashboardPage() {
       <div className="flex items-center space-x-6">
         <img src={avatarUrl} alt="User Avatar" className="w-32 h-32 rounded-full object-cover border-4 border-indigo-200" />
         <div>
-          <p className="text-xl text-gray-800">Welcome, <span className="font-semibold">{user.email}</span>!</p>
-          <p className="text-gray-500">User ID: {user.id}</p>
+          <p className="text-xl text-gray-800"><span className="font-semibold">{user.prenom} {user.nom}</span></p>
+          <p className="text-gray-500">Email: {user.email}</p>
         </div>
       </div>
 

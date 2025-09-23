@@ -1,12 +1,10 @@
-import { useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import { useAuth } from "../hooks/useAuth";
 import { useState } from "react";
 
 
 export function LoginPage() {
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const [error, setError] = useState('');
 
   const {login} = useAuth();
@@ -14,33 +12,36 @@ export function LoginPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    try {
-      await login(email, password);
-      navigate('/dashboard');
-    } catch(err) {
-      setError(err.message);
-    }
+
+    const data = new FormData(e.currentTarget);
+    await login(data.get('email'), data.get('password'))
+    .then(navigate('/dashboard'))
+    .catch(e => setError(e.message));
   }
 
+
   return (
-    <div className="flex justify-center">
-      <div className="w-full max-w-md bg-white p-8 rounded-lg shadow-md">
-        <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
-        {error && <p className="bg-red-100 text-red-700 p-3 rounded mb-4">{error}</p>}
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-gray-700">Email</label>
-            <input type="email" value={email} onChange={e => setEmail(e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required />
+    <div className="bg-white">
+      <div className="flex justify-center py-15">
+        <form className="flex flex-col" onSubmit={handleSubmit}>
+          <h2 className="text-4xl text-black py-5">Connexion</h2>
+          {error && <p className="bg-red-100 text-red-700 text-sm p-3 rounded mb-4 w-sm">{error}</p>}
+          <div className="flex flex-col py-2">
+            <label htmlFor="email" className="text-gray-400">Adresse email *</label>
+            <input type="email" name="email" placeholder="Veuillez entrez votre adresse email" className="bg-white border border-gray-300 p-2 rounded-xs w-sm" required/>
           </div>
-          <div className="mb-6">
-            <label className="block text-gray-700">Password</label>
-            <input type="password" value={password} onChange={e => setPassword(e.target.value)} className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500" required />
+          <div className="flex flex-col py-2">
+            <label htmlFor="password" className="text-gray-400">Mot de passe *</label>
+            <input type="password" name="password" placeholder="Veuillez entrez votre mot de passe" className="bg-white border border-radi border-gray-300 p-2 rounded-xs w-sm" required/>
           </div>
-          <button type="submit" className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition-colors">Login</button>
+          <div className="py-4 w-full">
+            <button type="submit" className="bg-black text-white p-3">Se connecter</button>
+          </div>
+          <div className="w-full max-w-full text-sm">
+            Vous n'avez encore de compte ? <NavLink to='/signup' className="text-sm text-white px-2 py-1 bg-gray-700">Créer un compte</NavLink>
+          </div>
         </form>
       </div>
     </div>
   );
 }
-
