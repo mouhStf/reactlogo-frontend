@@ -3,6 +3,7 @@ import { MinusIcon, PlusIcon } from '@heroicons/react/20/solid';
 import { motion } from "framer-motion";
 import { useState } from 'react';
 import { NavLink } from 'react-router';
+import { API_BASE_URL } from '../utils/api';
 
 const images = [
   '07fdbe0e-2141-4a2c-a0b9-fa4f11ca9bdd.jpeg',
@@ -50,7 +51,7 @@ function MainContent() {
       <div className="grid grid-cols-1 md:grid-cols-3 max-w-5xl">
         {images.map((item, index) => (
           <NavLink to="produit" key={index} className="group flex items-center flex-col m-3">
-            <img src={`http://localhost:8080/public/Couture/${item}`} className="aspect-14/19 object-cover" />
+            <img src={`${API_BASE_URL}/public/Couture/${item}`} className="aspect-14/19 object-cover" />
             <Seller title="Titre" price="Prix" />
           </NavLink>
         ))}

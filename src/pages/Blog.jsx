@@ -1,5 +1,6 @@
 import { NavLink } from "react-router";
 import { PageChanger } from "./Shop";
+import { API_BASE_URL } from "../utils/api";
 
 const blogData = [
   {
@@ -123,7 +124,7 @@ export function Blog() {
         {blogData.map((item) => (
           <div className="px-[12px] mb-16">
             <NavLink to="article">
-              <img src={`http://localhost:8080/public/Fashion/${item.image}`} className="aspect-45/28 object-cover"/>
+              <img src={`${API_BASE_URL}/public/Fashion/${item.image}`} className="aspect-45/28 object-cover"/>
             </NavLink>
             <div className="text-xl text-gray-400 mt-3">{item.category} / {item.date}</div>
             <NavLink to="article" className="text-3xl text-black mt-2">{item.title}</NavLink>

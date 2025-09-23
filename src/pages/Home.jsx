@@ -2,6 +2,7 @@ import { ArrowPathIcon, CalendarIcon, GiftIcon, ShoppingBagIcon } from "@heroico
 import { NouvellesCollections } from "./Home/NouvellesCollections";
 import { NavLink } from "react-router";
 import { Picture } from "../components/Picture";
+import { API_BASE_URL } from "../utils/api";
 
 
 const images = [
@@ -48,15 +49,15 @@ export function HomePage() {
 
         <div className="flex justify-around mt-30 px-10">
           <NavLink to="#">
-            <Picture src={`http://localhost:8080/public/Couture/${images[0]}`} aspect="10/11" maxHeight={370} />
+            <Picture src={`${API_BASE_URL}/public/Couture/${images[0]}`} aspect="10/11" maxHeight={370} />
             <div className="pt-1 text-gray-500">Boutique Homme</div>
           </NavLink>
           <NavLink to="#">
-            <Picture src={`http://localhost:8080/public/Couture/${images[1]}`} aspect="10/11" maxHeight={370} />
+            <Picture src={`${API_BASE_URL}/public/Couture/${images[1]}`} aspect="10/11" maxHeight={370} />
             <div className="pt-1 text-gray-500">Boutique Femme</div>
           </NavLink>
           <NavLink to="#">
-            <Picture src={`http://localhost:8080/public/Couture/${images[2]}`} aspect="10/11" maxHeight={370} />
+            <Picture src={`${API_BASE_URL}/public/Couture/${images[2]}`} aspect="10/11" maxHeight={370} />
             <div className="pt-1 text-gray-500">Accessoires</div>
           </NavLink>
         </div>

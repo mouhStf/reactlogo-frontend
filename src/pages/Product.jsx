@@ -7,6 +7,7 @@ import { Field, Label, Radio, RadioGroup } from '@headlessui/react';
 import { Tab, TabGroup, TabList, TabPanel, TabPanels } from '@headlessui/react'
 import { Picture } from '../components/Picture.jsx'
 import { Seller } from './Shop.jsx';
+import { API_BASE_URL } from '../utils/api.js';
 
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -158,7 +159,7 @@ function Pictures() {
     <div className="flex flex-col-reverse lg:flex-row items-center lg:items-start lg:space-x-8">
       <div className="flex lg:flex-col min-w-[150px] space-x-4 lg:space-y-16 mt-8 lg:mt-0 w-fit">
         {three.map((i) => (
-          <img key={i} src={`http://localhost:8080/public/Couture/${productData.images[i]}`} className="w-[140px] h-[210px] object-cover" onClick={() => goToSlide(i)}/>
+          <img key={i} src={`${API_BASE_URL}/public/Couture/${productData.images[i]}`} className="w-[140px] h-[210px] object-cover" onClick={() => goToSlide(i)}/>
         ))}
       </div>
       <div>
@@ -175,7 +176,7 @@ function Pictures() {
               >
                 <img
                   style={style}
-                  src={`http://localhost:8080/public/Couture/${item}`} className="w-full h-full object-cover transition-all duration-300 ease-out" />
+                  src={`${API_BASE_URL}/public/Couture/${item}`} className="w-full h-full object-cover transition-all duration-300 ease-out" />
 
               </div>
             </SwiperSlide>
@@ -289,7 +290,7 @@ function Details() {
                   w-[160px] h-[160px] min-w-[160px]
                   md:w-[90px] md:h-[90px] md:min-w-[90px]
                   lg:w-[120px] lg:h-[120px] lg:min-w-[120px]">
-                  <img src={`http://localhost:8080/public/Couture/${productData.images[0]}`} className="object-cover w-full h-full"/>
+                  <img src={`${API_BASE_URL}/public/Couture/${productData.images[0]}`} className="object-cover w-full h-full"/>
                 </div>
                 <div className="flex flex-col">
                   <div className="flex items-center">
@@ -367,7 +368,7 @@ function SeeMore() {
         {moreImages.map((slide, index) => (
           <SwiperSlide key={index} virtualIndex={index}>
             <div className="group">
-              <Picture key={index} src={`http://localhost:8080/public/Couture/${slide}`} maxHeight={700} aspect={13/19}/>
+              <Picture key={index} src={`${API_BASE_URL}/public/Couture/${slide}`} maxHeight={700} aspect={13/19}/>
               <Seller title="Titre" price="Prix"/>
             </div>
           </SwiperSlide>

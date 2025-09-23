@@ -7,6 +7,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import { NavLink } from "react-router";
 import { Picture } from "../../components/Picture";
+import { API_BASE_URL } from "../../utils/api";
 
 const images = [
   '07fdbe0e-2141-4a2c-a0b9-fa4f11ca9bdd.jpeg',
@@ -75,7 +76,7 @@ export function NouvellesCollections() {
               <SwiperSlide key={index} virtualIndex={index}>
                 <div>
                   <div className="flex items-center justify-center ">
-                    <Picture src={`http://localhost:8080/public/Couture/${slide}`} aspect="16/19" maxHeight={600} alt={`Slide ${index + 1}`}/>
+                    <Picture src={`${API_BASE_URL}/public/Couture/${slide}`} aspect="16/19" maxHeight={600} alt={`Slide ${index + 1}`}/>
                   </div>
                   <div className="text-left pt-2 text-2xl text-gray-700">
                     SOFT LEATHER JACKET
