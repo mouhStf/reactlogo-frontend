@@ -119,8 +119,8 @@ const blogData = [
 
 export function Blog() {
   return (
-    <div className="p-[50px] mt-[50px]">
-      <div className="w-full grid grid-cols-3">
+    <div className="p-[50px] mt-[50px] flex flex-col items-center">
+      <div className="w-full grid grid-cols-1 md:grid-cols-3 max-w-[1200px]">
         {blogData.map((item) => (
           <div className="px-[12px] mb-16">
             <NavLink to="article">

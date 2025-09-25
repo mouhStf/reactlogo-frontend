@@ -92,7 +92,7 @@ function Crender({cls, data}) {
   }
 }
 
-function RFormatted({data}) {
+export function RFormatted({data}) {
   return (
     <>
       {data.map((item, i) => (
