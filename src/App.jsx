@@ -10,7 +10,8 @@ import { Shop } from './pages/Shop';
 import { Product } from './pages/Product';
 import { Blog } from './pages/Blog';
 import { BlogPost } from './pages/BlogPost';
-
+import Aos from 'aos';
+import "aos/dist/aos.css";
 
 async function protectedLoader() {
   const isLoggedIn = localStorage.getItem('token');
@@ -56,11 +57,18 @@ const router = createBrowserRouter([
 ])
 
 
-
 function Root() {
   const {authenticate} = useAuth();
 
-  useEffect(() => { authenticate(); }, []);
+  useEffect(() => { 
+
+    Aos.init({
+      duration: 1200,
+      once: true,
+      easing: 'ease'
+    });
+    authenticate(); 
+  }, []);
 
   return (
     <div className="bg-gray-100 min-h-screen font-serif">

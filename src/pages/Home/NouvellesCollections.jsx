@@ -58,8 +58,8 @@ export function NouvellesCollections() {
   return (
     <div className="bg-stone-200">
       <div className="text-center py-25 px-7 flex flex-col items-center">
-        <h1 className="text-7xl text-stone-700 py-3">Nouvelles Collections</h1>
-        <h3 className="text-lg text-stone-500 py-7 max-w-xl">
+        <h1 className="text-7xl text-stone-700 py-3" data-aos="fade-up">Nouvelles Collections</h1>
+        <h3 className="text-lg text-stone-500 py-7 max-w-xl" data-aos="fade-up" data-aos-delay="300">
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe voluptas ut dolorum consequuntur, adipisci repellat! Eveniet commodi voluptatem voluptate, eum minima, in suscipit explicabo voluptatibus harum, quibusdam ex repellat eaque!
         </h3>
 
@@ -71,6 +71,8 @@ export function NouvellesCollections() {
             slidesPerView={slidesPerView}
             spaceBetween={spaceBetween}
             navigation={true}
+            data-aos="fade-up"
+            data-aos-delay="600"
           >
             {images.map((slide, index) => (
               <SwiperSlide key={index} virtualIndex={index}>

@@ -2,6 +2,29 @@ import { NavLink } from "react-router";
 import { API_BASE_URL } from "../utils/api";
 
 
+const blogData = [
+  {
+    image: '0.jpg',
+    category: 'Tenues Traditionnelles',
+    date: '15 janv. 2022',
+    title: 'Le Boubou Iconique : Vêtement Intemporel du Sénégal',
+    description: 'Découvrez la signification culturelle et les adaptations modernes du boubou, une robe fluide symbolisant respect et communauté dans la mode sénégalaise.',
+  },
+  {
+    image: '1.jpg',
+    category: 'Focus Créateur',
+    date: '10 févr. 2022',
+    title: 'Selly Raby Kane : Révolution de la Couture Sénégalaise',
+    description: 'Découvrez comment Selly Raby Kane mêle motifs wolofs traditionnels et silhouettes contemporaines pour une renommée mondiale.',
+  },
+  {
+    image: '2.jpg',
+    category: 'Streetwear',
+    date: '05 mars, 2022',
+    title: 'Style Urbain de Dakar : Fusion d’Héritage et Modernité',
+    description: 'Des marchés animés aux avenues branchées, les jeunes sénégalais mêlent streetwear et motifs culturels pour un look unique.',
+  },
+]
 
 const postData = {
   category: "Fashion",
@@ -109,12 +132,13 @@ export function RFormatted({data}) {
 export function BlogPost() {
   return (
     <div className="min-h-screen border-t-1 border-t-stone-200">
-      <div className="mt-[100px]">
+      <div className="mt-[100px] px-8">
         <Head />
-        <div className="flex">
+        <div className="flex flex-col items-center md:items-start md:flex-row space-x-13">
           <Main />
           <Side />
         </div>
+        <Related />
       </div>
     </div>
   );
@@ -138,7 +162,7 @@ function Head() {
 
 function Main() {
   return (
-    <div className="w-full px-13 mb-40">
+    <div className="w-full max-w-[515px] md:max-w-full mb-16">
       <Article />
       <Links />
       <Author />
@@ -148,7 +172,6 @@ function Main() {
 }
 
 function Side() {
-
   const recentPosts = [
     {
       image: '0.jpg',
@@ -172,9 +195,8 @@ function Side() {
       description: 'Des marchés animés aux avenues branchées, les jeunes sénégalais mêlent streetwear et motifs culturels pour un look unique.',
     }
   ]
-
   return (
-    <div className="min-w-[300px] w-[300px] pr-12">
+    <div className="max-w-[515px] lg:min-w-[300px]">
       <input type="text" className="border border-gray-300 w-full py-3 px-4 mb-10" placeholder="Chercher"/>
 
       <div className="mb-10">
@@ -314,7 +336,7 @@ function Commentaires() {
       </div>
 
       <div>
-        <h2 className="text-5xl mb-8">Mettre un commentaire</h2>
+        <h2 className="text-5xl">Mettre un commentaire</h2>
         <form className="">
           <div className="text-lg text-gray-500 mb-5">Votre adresse email ne sera pas publié. Les chams requis sont marqué *</div>
           <Input type="textarea" placeholder="Ecrivez votre commentaire ici *" className="mb-2"/>
@@ -333,4 +355,24 @@ function Commentaires() {
   );
 }
 
+function Related() {
+  return (
+    <div className="mt-16">
+      <div className="text-6xl mb-10">Posts semblables</div>
+
+      <div className="w-full grid grid-cols-1 md:grid-cols-3 max-w-[1200px]">
+        {blogData.map((item) => (
+          <div className="px-[12px] mb-16">
+            <NavLink to="article">
+              <img src={`${API_BASE_URL}/public/Fashion/${item.image}`} className="aspect-45/28 object-cover"/>
+            </NavLink>
+            <div className="text-xl text-gray-400 mt-3">{item.category} / {item.date}</div>
+            <NavLink to="article" className="text-3xl text-black mt-2">{item.title}</NavLink>
+            <div className="text-gray-400 mt-2">{item.description}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
 

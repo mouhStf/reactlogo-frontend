@@ -3,6 +3,7 @@ import { NouvellesCollections } from "./Home/NouvellesCollections";
 import { NavLink } from "react-router";
 import { Picture } from "../components/Picture";
 import { API_BASE_URL } from "../utils/api";
+import 'aos/dist/aos.css';
 
 
 const images = [
@@ -15,30 +16,30 @@ export function HomePage() {
   return (
     <>
       <NouvellesCollections />
-      <div className="h-[900px]">
+      <div className="h-[900px] w-full overflow-hidden">
         <div className="flex justify-around mt-16">
-          <div className="flex flex-col items-center w-50 text-center">
+          <div className="flex flex-col items-center w-50 text-center" data-aos="fade-in" data-aos-delay="0">
             <CalendarIcon className="size-13 text-gray-500"/>
             <div className="text-2xl pt-5 pb-2 text-gray-600">Prenez Rendez-Vous</div>
             <div className="text-gray-600">
               At imperdiet dui accumsan sit amet nulla risus est ultricies quis.
             </div>
           </div>
-          <div className="flex flex-col items-center w-50 text-center">
+          <div className="flex flex-col items-center w-50 text-center" data-aos="fade-in" data-aos-delay="300">
             <ShoppingBagIcon className="size-13 text-gray-500"/>
             <div className="text-2xl pt-5 pb-2 text-gray-600">Shoping</div>
             <div className="text-gray-600">
               At imperdiet dui accumsan sit amet nulla risus est ultricies quis.
             </div>
           </div>
-          <div className="flex flex-col items-center w-50 text-center">
+          <div className="flex flex-col items-center w-50 text-center" data-aos="fade-in" data-aos-delay="600">
             <GiftIcon className="size-13 text-gray-500"/>
             <div className="text-2xl pt-5 pb-2 text-gray-600">Packet Spécial</div>
             <div className="text-gray-600">
               At imperdiet dui accumsan sit amet nulla risus est ultricies quis.
             </div>
           </div>
-          <div className="flex flex-col items-center w-50 text-center">
+          <div className="flex flex-col items-center w-50 text-center" data-aos="fade-in" data-aos-delay="900">
             <ArrowPathIcon className="size-13 text-gray-500"/>
             <div className="text-2xl pt-5 pb-2 text-gray-600">Retour Global Gratuit</div>
             <div className="text-gray-600">
@@ -47,7 +48,7 @@ export function HomePage() {
           </div>
         </div>
 
-        <div className="flex justify-around mt-30 px-10">
+        <div className="flex justify-around mt-30 px-10" data-aos="zoom-out">
           <NavLink to="#">
             <Picture src={`${API_BASE_URL}/public/Couture/${images[0]}`} aspect="10/11" maxHeight={370} />
             <div className="pt-1 text-gray-500">Boutique Homme</div>
