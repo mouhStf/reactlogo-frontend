@@ -1,8 +1,10 @@
-import { NavLink } from "react-router";
+import { NavLink, useLocation, useMatch } from "react-router";
 import { useAuth } from "./hooks/useAuth";
-import { Disclosure, DisclosurePanel, DisclosureButton, Menu, MenuButton, MenuItem, MenuItems, CloseButton } from '@headlessui/react'
+import { Disclosure, DisclosurePanel, DisclosureButton, Menu, MenuButton, MenuItem, MenuItems, CloseButton, Popover, PopoverButton, PopoverPanel, ComboboxInput, Combobox, ComboboxButton } from '@headlessui/react'
 import { ChevronDownIcon, ChevronUpIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/20/solid'
 import { MagnifyingGlassIcon, ShoppingCartIcon, UserIcon } from '@heroicons/react/24/outline'
+import { useEffect, useState } from "react";
+import { Mnav } from "./components/Components";
 
 
 const navigation = [
@@ -19,16 +21,38 @@ const navigation = [
 
 export function Navbar() {
   const {isAuthenticated, logout} = useAuth();
+  const {pathname} = useLocation();
+  const [scrollY, setScrollY] = useState(0);
+  const isMatch = ['/blog', '/blog/', '/shop', '/shop/'].includes(pathname);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <Disclosure as="nav" className="bg-gray-100 text-gray-500">
+    <Disclosure as="nav" className="top-0 left-0 w-full border-b-[1px] border-stone-600 text-gray-500 transition-colors duration-600 ease-out z-50"
+      style={
+        isMatch ? 
+          {
+            background: scrollY < 220 ? "transparent" : "black",
+            position: "fixed",
+            color: "white",
+          } :
+          {
+            position: "relative",
+            borderColor: "#e7e5e4",
+          } 
+      }
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           <DisclosureButton className="group hover:bg-gray-200 p-2 sm:hidden">
             <Bars3Icon className="block size-6 group-data-open:hidden"/>
             <XMarkIcon className="hidden size-6 group-data-open:block"/>
           </DisclosureButton>
-          <NavLink className="flex text-3xl sm:text-xl md:text-3xl text-gray-900 flex-col items-center leading-none" to='/'>
+          <NavLink className="flex text-3xl sm:text-xl md:text-3xl flex-col items-center leading-none" to='/'>
             <span>DJOLOF</span>
             <span className="text-sm">SHOP</span>
           </NavLink>
@@ -36,20 +60,23 @@ export function Navbar() {
             {navigation.map((item) => (
               item.subNavigation ?
                 <div key={item.name} className="relative group">
-                  <NavLink to={item.href} className="hover:text-stone-900 px-3 py-2">{item.name}</NavLink>
-                  <div className="absolute hidden w-max group-hover:block bg-gray-200/95 shadow-sm z-10 text-base">
+                  <NavLink to={item.href} className="hover:text-stone-400 px-3 py-2"
+                  >{item.name}</NavLink>
+                  <div className="absolute hidden w-max text-stone-600 group-hover:block bg-gray-200/95 shadow-sm z-10 text-base">
                     {item.subNavigation.map((subItem) => (
-                      <a key={subItem.name} href={subItem.href} className="hover:text-stone-900 block px-4 py-2">{subItem.name}</a>
+                      <a key={subItem.name} href={subItem.href} className="hover:text-stone-950 block px-4 py-2">{subItem.name}</a>
                     ))}
                   </div>
                 </div>
                 :
-                <NavLink key={item.name} to={item.href} className="hover:text-stone-900 px-3 py-2">{item.name}</NavLink>
+                <NavLink key={item.name} to={item.href} className="hover:text-stone-400 px-3 py-2">{item.name}</NavLink>
             ))}
           </div>
           <div className="flex items-center space-x-3">
-            <MagnifyingGlassIcon className="hover:text-stone-900 h-6 w-6" />
-            <ShoppingCartIcon className="hover:text-stone-900 h-6 w-6"/>
+            <Mnav to="/blog/search">
+              <MagnifyingGlassIcon className="hover:text-stone-400 h-6 w-6" />
+            </Mnav>
+            <ShoppingCartIcon className="hover:text-stone-400 h-6 w-6"/>
             <Menu as="div" className="relative">
               <MenuButton className="gap-x-1 px-3 py-3 rounded-xs hover:bg-gray-200">
                 <UserIcon className="h-6 w-6" />

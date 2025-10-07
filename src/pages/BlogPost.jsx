@@ -20,7 +20,7 @@ function Crender({element, cls, data}) {
         </ul>
       );
     case 'img':
-      return <img className={cls} src={`${API_BASE_URL}/public/Fashion/${data}`}/>
+      return <Img className={cls} src={`${API_BASE_URL}/public/Fashion/${data}`}/>
     default:
       return <div className={cls}>{data}</div>
   }
@@ -120,9 +120,9 @@ function Side() {
             <h2 className="text-3xl mb-3">Catégories</h2>
             <div className="border-t-1 border-gray-300 pt-4">
               {blogPostSide.categories.map((c, i) => (
-                <NavLink key={i} className="block text-lg hover:underline underline-offset-4 cursor-pointer">
+                <Mnav to={`/blog?category=${c.id}`} key={i} className="block text-lg hover:underline underline-offset-4 cursor-pointer">
                   {c.name}
-                </NavLink>
+                </Mnav>
               ))}
             </div>
           </div>
@@ -131,9 +131,9 @@ function Side() {
             <h2 className="text-3xl mb-3">Tags</h2>
             <div className="border-t-1 border-gray-300 flex flex-wrap space-x-2 space-y-2 max-w-[288px] pt-4 text-gray-500">
               {blogPostSide.tags.map((t, i) => (
-                <NavLink key={i} className="border border-gray-600 py-2 px-3 text-md cursor-pointer hover:text-white hover:bg-gray-500">
+                <Mnav to={`/blog?tag=${t.id}`} key={i} className="border border-gray-600 py-2 px-3 text-md cursor-pointer hover:text-white hover:bg-gray-500">
                   {t.name}
-                </NavLink>
+                </Mnav>
               ))}
             </div>
           </div>
@@ -143,7 +143,7 @@ function Side() {
             <div className="border-t-1 border-gray-300 space-y-3 pt-4">
               {blogPostSide.recents.map((a, i) => (
                 <Mnav key={i} className="flex space-x-4 text-lg cursor-pointer items-center" to={`/blog/${a.id}`}>
-                  <img src={`${API_BASE_URL}/public/Fashion/${a.image}`} className="aspect-square h-[65px] w-[65px] object-cover"/>
+                  <Img src={`${API_BASE_URL}/public/Fashion/${a.image}`} className="aspect-square h-[65px] w-[65px] object-cover"/>
                   <div className="">
                     <div className="text-gray-500 text-lg">{a.date}</div>
                     <div className="text-md max-h-17 leading-5 overflow-hidden">{a.title}</div>
@@ -177,7 +177,7 @@ function Article({image, content}) {
     <>
       {content && image && 
         <>
-          <img src={`${API_BASE_URL}/public/Fashion/${image}`} className="aspect-45/28 object-cover mb-10"/>
+          <Img src={`${API_BASE_URL}/public/Fashion/${image}`} className="aspect-45/28 object-cover mb-10"/>
           <div className="text-lg text-gray-600 mb-5">
             <RFormatted data={content} />
           </div>
@@ -197,7 +197,7 @@ function Links({tags, prev, next}) {
           {tags && 
             <>
               {tags.map((tag, i) => (
-              <NavLink key={i}>{tag.name}</NavLink>
+              <Mnav to={`/blog?tag=${tag.id}`} key={i}>{tag.name}</Mnav>
               ))}
             </>
            }
@@ -305,9 +305,9 @@ function Related({articles}) {
       <div className="w-full grid grid-cols-1 md:grid-cols-3 max-w-[1200px]">
         {articles.map((a, i) => (
           <div key={i} className="px-[12px] mb-16">
-            <NavLink to="article">
+            <Mnav to={`/blog/${a.id}`}>
               <Img src={`${API_BASE_URL}/public/Fashion/${a.image}`} className="aspect-45/28 object-cover"/>
-            </NavLink>
+            </Mnav>
             <div className="text-xl text-gray-400 mt-3">{a.category} / {a.date}</div>
             <NavLink to="article" className="text-3xl text-black mt-2">{a.title}</NavLink>
             <div className="text-gray-400 mt-2">{a.summary}</div>

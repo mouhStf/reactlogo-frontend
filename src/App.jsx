@@ -12,6 +12,7 @@ import { Blog } from './pages/Blog';
 import { BlogPost } from './pages/BlogPost';
 import Aos from 'aos';
 import "aos/dist/aos.css";
+import { Search } from './pages/Search';
 
 async function protectedLoader() {
   const isLoggedIn = localStorage.getItem('token');
@@ -39,6 +40,11 @@ const router = createBrowserRouter([
         children: [
           {path: '', element: <Blog/>, },
           {path: ':id', element: <BlogPost/>, },
+          {path: 'search',
+            children: [
+              {path: '', element: <Search/>, },
+            ]
+          },
         ],
       },
       { path: 'signup', element: <SignupPage/> },
@@ -61,7 +67,6 @@ function Root() {
   const {authenticate} = useAuth();
 
   useEffect(() => { 
-
     Aos.init({
       duration: 1200,
       once: true,
@@ -71,7 +76,7 @@ function Root() {
   }, []);
 
   return (
-    <div className="bg-gray-100 min-h-screen font-serif">
+    <div className="min-h-screen font-serif">
       <Navbar/>
       <main>
         <Outlet/>

@@ -28,7 +28,7 @@ export type Article = null | {
   id: number;
   authorId: number;
   title: string;
-  category: string;
+  categoryId: number;
   image: string;
   date: string;
   summary: string;
@@ -81,4 +81,9 @@ export type BlogPostSide = null | {
 	categories: ArticleCategory[];
 	tags: Tag[];
 	recents: Article[];
+}
+
+export type CategoriesTags = null | {
+	categories: ArticleCategory[];
+	tags: Tag[];
 }

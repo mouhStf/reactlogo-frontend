@@ -1,9 +1,10 @@
 import { Checkbox, Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
 import { MinusIcon, PlusIcon } from '@heroicons/react/20/solid';
-import { motion } from "framer-motion";
 import { useState } from 'react';
 import { NavLink } from 'react-router';
 import { API_BASE_URL } from '../utils/api';
+import { motion, useScroll, useTransform } from "framer-motion";
+import { PageChanger } from '../components/PageChanger';
 
 const images = [
   '07fdbe0e-2141-4a2c-a0b9-fa4f11ca9bdd.jpeg',
@@ -21,13 +22,23 @@ const images = [
 ]
 
 export function Shop() {
+  const { scrollY } = useScroll();
+  const y = useTransform(scrollY, [0, 500], [0, -200]); // move slower
+
   return (
-    <div className="min-h-screen bg-stone-50 w-full pt-20 flex justify-center p-6">
-      <div className="max-w-[500px] md:max-w-full md:flex md:space-x-6">
-        <MainContent />
-        <SideBar />
+    <>
+      <section className="h-[420px] relative overflow-hidden" style={{zIndex: -1, y}}>
+          <motion.img src={`${API_BASE_URL}/public/Fashion/11.jpg`} className="fixed object-cover w-full h-full" alt=""
+            style={{ y }}/>
+      </section>
+      <div className="min-h-screen bg-stone-50 w-full pt-20 flex justify-center p-6">
+        <div className="max-w-[500px] md:max-w-full md:flex md:space-x-6">
+          <MainContent />
+          <SideBar />
+        </div>
       </div>
-    </div>
+    </>
+
   );
 }
 
@@ -61,21 +72,6 @@ function MainContent() {
   );
 }
 
-export function PageChanger() {
-
-  return (
-    <div className="py-10 flex justify-center">
-      <div className="flex w-fit font-sans space-x-1">
-        <button className="bg-black text-white cursor-pointer w-6 h-8 text-center"><div className="mt-1" >1</div></button>
-        <button className="hover:bg-gray-200 cursor-pointer w-6 h-8 text-center"><div className="mt-1" >2</div></button>
-        <button className="hover:bg-gray-200 cursor-pointer w-6 h-8 text-center"><div className="mt-1" >3</div></button>
-        <button className="hover:bg-gray-200 cursor-pointer w-6 h-8 text-center"><div className="mt-1" >4</div></button>
-        <button className="hover:bg-gray-200 cursor-pointer w-6 h-8 text-center"><div className="mt-1" >5</div></button>
-      </div>
-    </div>
-  ); 
-}
-
 function SideBar() {
 
   const [colorOpen, setColorOpen] = useState(true);
@@ -84,7 +80,7 @@ function SideBar() {
   const [brandOpen, setBrandOpen] = useState(true);
 
   return (
-    <div className="">
+    <section className="">
       <div className="text-lg md:w-[180px] lg:w-[260px] font-sans mt-4">
         <h2 className="font-medium">AFFICHER PAR CATÉGORIE :</h2>
         <button className="block cursor-pointer hover:underline underline-offset-2">Tous</button>
@@ -223,7 +219,7 @@ function SideBar() {
                 <div className="flex flex-col space-y-5 py-3 mt-2 text-lg">
                   <button className="flex space-x-2 border border-stone-300 p-2 text-gray-600 cursor-pointer hover:border-gray-900">
                     <span>Moins de 5000 F CFA (N)</span>
-                    
+
                   </button>
                   <button className="flex space-x-2 border border-stone-300 p-2 text-gray-600 cursor-pointer hover:border-gray-900">
                     <span>5000 - 10 000 F CFA (N)</span>
@@ -264,7 +260,7 @@ function SideBar() {
                 <div className="flex flex-col space-y-5 py-3 mt-2 text-lg">
                   <button className="flex space-x-2 border border-stone-300 p-2 text-gray-600 cursor-pointer hover:border-gray-900">
                     <span>MARQUE (N)</span>
-                    
+
                   </button>
                   <button className="flex space-x-2 border border-stone-300 p-2 text-gray-600 cursor-pointer hover:border-gray-900">
                     <span>MARQUE (N)</span>
@@ -281,6 +277,6 @@ function SideBar() {
           </Disclosure>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
